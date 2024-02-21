@@ -28,6 +28,13 @@ public sealed class ScopedBackgroundService(
 
         bool orderProcessed = false;
         bool isOrderAccepted = false;
+        
+        //let's simulate a human who might be busy and can/cannot answer in time
+        var rnd = new Random();
+        TimeSpan interactionWaitingTimeInMinutes = rnd.NextDouble() * TimeSpan.FromMinutes(10);
+        bool interactionOrderCompleted = rnd.Next() > Int32.MaxValue / 2;
+
+        char response = interactionOrderCompleted  ? 'A' : 'R';
 
         while (DateTime.Now < order.ExpiresAt && !orderProcessed)
         {
@@ -35,13 +42,6 @@ public sealed class ScopedBackgroundService(
 
             //that is blocking the queue... not a good choice
             //var keyStroke = await Console.In.ReadLineAsync(stoppingToken);
-
-            //let's simulate a human who might be busy and can/cannot answer in time
-            var rnd = new Random();
-            TimeSpan interactionWaitingTimeInMinutes = rnd.NextDouble() * TimeSpan.FromMinutes(10);
-            bool interactionOrderCompleted = rnd.Next() > Int32.MaxValue / 2;
-
-            char response = interactionOrderCompleted  ? 'A' : 'R';
             
             await Console.Out.WriteLineAsync($"Kitchen will answer your order {order.OrderId} in {interactionWaitingTimeInMinutes.TotalMinutes} minutes");
             await Task.Delay(interactionWaitingTimeInMinutes, stoppingToken);
@@ -53,7 +53,7 @@ public sealed class ScopedBackgroundService(
                 isOrderAccepted = false;
                 break;
             }
-
+            await Console.Out.WriteLineAsync(response);
             switch (response)
             {
                 case 'A':
