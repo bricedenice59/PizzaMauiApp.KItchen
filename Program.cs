@@ -8,11 +8,12 @@ var builder = Host.CreateApplicationBuilder(args);
 
 //decode configuration environment variables;
 var rabbitMqConnectionConfig = new DbConnectionConfig(builder.Configuration, "RabbitMq");
-if (rabbitMqConnectionConfig.Host is null || rabbitMqConnectionConfig.Port is null)
-{
-    Console.WriteLine("There was an issue reading configuration from dotnet user-secrets");
-    throw new ArgumentException();
-}
+//check if secrets data are correctly read and binded to object
+ArgumentException.ThrowIfNullOrEmpty(rabbitMqConnectionConfig.Host);
+ArgumentException.ThrowIfNullOrEmpty(rabbitMqConnectionConfig.Port);
+ArgumentException.ThrowIfNullOrEmpty(rabbitMqConnectionConfig.Username);
+ArgumentException.ThrowIfNullOrEmpty(rabbitMqConnectionConfig.Password);
+
 builder.Services.AddMassTransit(x =>
 {
     var entryAssembly = Assembly.GetEntryAssembly();

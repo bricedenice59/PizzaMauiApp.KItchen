@@ -10,8 +10,9 @@ namespace PizzaMauiApp.Kitchen.Consumers
             processStackOrder.Enqueue(new KitchenOrderDto()
             {
                 OrderId = context.Message.OrderId,
+                UserId = context.Message.UserId,
                 Items = context.Message.Items,
-                ReceivedAt = DateTime.Now
+                CreatedAt = context.Message.CreatedAt
             });
             return Task.CompletedTask;
         }

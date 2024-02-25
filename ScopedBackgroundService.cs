@@ -75,7 +75,8 @@ public sealed class ScopedBackgroundService(
             {
                 OrderId = order.OrderId,
                 UserId = order.UserId,
-                Items = order.Items
+                Items = order.Items,
+                CreatedAt = order.CreatedAt
             }, stoppingToken);
         }
         else
@@ -84,7 +85,8 @@ public sealed class ScopedBackgroundService(
             {
                 OrderId = order.OrderId,
                 UserId = order.UserId,
-                Items = order.Items
+                Items = order.Items,
+                CreatedAt = order.CreatedAt
             }, stoppingToken);
         }
     }

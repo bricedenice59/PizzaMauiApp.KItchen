@@ -7,6 +7,6 @@ public class KitchenOrderDto
     public Guid OrderId { get; set; }
     public Guid UserId { get; set; }
     public List<IOrderItem>? Items { get; set; }
-    public DateTime ReceivedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
     public DateTime ExpiresAt { get; set; }
 }
