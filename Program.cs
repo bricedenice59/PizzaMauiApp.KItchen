@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using MassTransit;
-using PizzaMauiApp.API.Shared.Environment;
+using PizzaMauiApp.API.Core.Environment;
 using PizzaMauiApp.Kitchen;
 
 var builder = Host.CreateApplicationBuilder(args);
